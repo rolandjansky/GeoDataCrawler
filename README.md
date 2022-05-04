@@ -12,14 +12,14 @@ API).
 ## What I did
 1. Read the description of the assessment, got an overview of all related files
 2. Tried to understand what is needed to get to the expected result (GeoJSON)
-    - Looked at the Post_Adressdaten20170425.csv file, skimmed through the description --> Okay, this is a relational DB stored as csv. --> Data can be easily and efficiently transformed in a Python app. Still took around 20 minutes to understand all the details, pick the right fields, etc.
-    - lat/lon information needs to be retrieved from REST API --> easy enough, quite familiar with doing this in Python apps. We do however need to query the API in an inefficient way (e.g. no bulk requests are supported by the server). This will be IO limited and the server will likely not be happy about the 1M+ requests. I haven't worked with such a task previously.
-    - Looked up what GeoJSON is (compared to JSON), which did only take couple of minutes as it's super simple. Then also looked up what library exists to easily write this out without any custom code. 
+      - Looked at the Post_Adressdaten20170425.csv file, skimmed through the description --> Okay, this is a relational DB stored as csv. --> Data can be easily and efficiently transformed in a Python app. Still took around 20 minutes to understand all the details, pick the right fields, etc.
+      - lat/lon information needs to be retrieved from REST API --> easy enough, quite familiar with doing this in Python apps. We do however need to query the API in an inefficient way (e.g. no bulk requests are supported by the server). This will be IO limited and the server will likely not be happy about the 1M+ requests. I haven't worked with such a task previously.
+      - Looked up what GeoJSON is (compared to JSON), which did only take couple of minutes as it's super simple. Then also looked up what library exists to easily write this out without any custom code. 
 3. Next I validated that the transformed data I got from the csv file is valid by comparing it with other public sources that list existing addresses for a given street name and such
 4. I spent around 60-90 minutes googling what appropriate solutions are for the "API scraping" problem are and what libraries exist. The code for this was then largely copy & paste from very similar problems other peopel already solved.
-    - My main uncertainty here is how efficient my solution is.
-    - I implemented a semaphore as there seems to be a limitation on the number of concurrent open sockets just from my Windows machine
-    - The REST API however anyway seems to limit the number of request more stringent than this limit. I've introduced a limiter which I eventually set to not run more than 80 requests per second. Above that the server eventually rejects the connection for some time. For this case I've introduced another safe guard that slows down the request rate by letting a task that encounters this issue sleep for some seconds. Sadly I wasn't able to figure out how the server really enforces rate limiting. Or if it does at all.. Maybe I just overloaded it.
+      - My main uncertainty here is how efficient my solution is.
+      - I implemented a semaphore as there seems to be a limitation on the number of concurrent open sockets just from my Windows machine
+      - The REST API however anyway seems to limit the number of request more stringent than this limit. I've introduced a limiter which I eventually set to not run more than 80 requests per second. Above that the server eventually rejects the connection for some time. For this case I've introduced another safe guard that slows down the request rate by letting a task that encounters this issue sleep for some seconds. Sadly I wasn't able to figure out how the server really enforces rate limiting. Or if it does at all.. Maybe I just overloaded it.
 5. Since time was quickly approaching the 4 hours, I then wrote the method for writting out the data to a GeoJSON file so that I do have some output
 
 ## What I did not manage to do
