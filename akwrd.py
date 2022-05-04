@@ -121,12 +121,10 @@ async def main() -> None:
     # by using some parallel processing framework like dask.
     dfs = []
     current_row = 0
-    address_df = address_df[:10000]
     while current_row <= address_df.shape[0]:
         dfs.append(address_df[current_row : current_row + BATCH_SIZE])
         current_row += BATCH_SIZE
-    for i, sub_df in enumerate(dfs):
-        print(i)
+    for sub_df in dfs:
         sub_df[["latitude", "longitude"]] = await asyncio.gather(
             *[enrich_address(v, semaphore) for v in sub_df.itertuples()]
         )
