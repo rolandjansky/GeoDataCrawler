@@ -23,7 +23,7 @@ API).
 5. Since time was quickly approaching the 4 hours, I then wrote the method for writing out the data to a GeoJSON file so that I do have some output
 
 ## What I did not manage to do
-1. I usually do test-driven-development. Here I really was not sure what methods I'll be ending up with and what there input/outputs will be, and hence I postponed writing tests and eventually ran out of time to do so. This one hurts me the most for not having done it.
+1. I usually do test-driven-development. Here I really was not sure what methods I'll be ending up with and what there input/outputs will be, and hence I postponed writing tests and eventually ran out of time to do so. This one hurts me the most for not having done it. Good tests also largely replace any other doc strings or comment needed in the implementation, hence this is also missing.
 2. Also there wasn't time for several other needed additions like using a proper retry policy, more efficient processing of the input data (better using the CPU resources)
 3. I also didn't have time to containerize this app or something. Also it has very little dependencies and is easy to run, hence this is not strictly necessary.
 4. Since I could only query the server reliably at 80 requests per second, I did not run a job which actually queries the server for all addresses - as this would take around 6 hours at this rate
