@@ -1,4 +1,4 @@
- # Case study for Avobis
+ # Case study for real estate firm
 This code is based on an assessment I did where I had the following...
 
 ## Mission
